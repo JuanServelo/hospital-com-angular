@@ -69,7 +69,7 @@ export class MedicoComponent {
     });
   }
 
-  atualizarMedico(row : any) {
+  editarMedico(row : any) {
     if(row.id == null || row.nome == null){
       return;
     }
@@ -90,6 +90,10 @@ export class MedicoComponent {
         this.openSnackBar('Atualização realizada com sucesso!', 'Fechar');
       }
     });
+  }
+
+  vizualizarMedico(row : any){
+    window.open('/dashboard/medico/'+row.id, '_blank');
   }
 
   getMedicos(){
@@ -118,9 +122,5 @@ export class MedicoComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }
-
-  vizualizarMedico(row : any){
-    window.open('/dashboard/medico/'+row.id, '_blank');
   }
 }

@@ -17,6 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteMedicoComponent } from './component/dashboard/medico/delete-medico/delete-medico.component';
 import { ViewMedicoComponent } from './component/dashboard/medico/view-medico/view-medico.component';
 import { AddPacienteComponent } from './component/dashboard/paciente/add-paciente/add-paciente.component';
+import { DeletePacienteComponent } from './component/dashboard/paciente/delete-paciente/delete-paciente.component';
+import { ViewPacienteComponent } from './component/dashboard/paciente/view-paciente/view-paciente.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { AddPacienteComponent } from './component/dashboard/paciente/add-pacient
     AddMedicoComponent,
     DeleteMedicoComponent,
     ViewMedicoComponent,
-    AddPacienteComponent
+    AddPacienteComponent,
+    DeletePacienteComponent,
+    ViewPacienteComponent
   ],
   imports: [
     BrowserModule,

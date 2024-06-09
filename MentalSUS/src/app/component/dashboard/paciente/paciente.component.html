@@ -9,4 +9,66 @@
             </mat-card>
         </div>
     </div>
+    <br>
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. nome" #input>
+    </mat-form-field>
+    
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+    
+            <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+                <td mat-cell *matCellDef="let row"> {{row.paciente_nome}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="telefone">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefone </th>
+                <td mat-cell *matCellDef="let row"> {{row.telefone}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="medico">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Medico </th>
+                <td mat-cell *matCellDef="let row"> {{getNomeMedico(row.medico_id)}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="genero">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Sexo </th>
+                <td mat-cell *matCellDef="let row"> {{row.genero}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Editar </th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="vizualizarPaciente(row)">
+                            <mat-icon>visibility</mat-icon>
+                            <span>Visualizar</span>
+                        </button>
+                        <button mat-menu-item (click)="atualizarPaciente(row)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Editar</span>
+                        </button>
+                        <button mat-menu-item (click)="deletarPaciente(row)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Deletar</span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+        </table>
+    
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
 </div>

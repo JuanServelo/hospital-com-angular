@@ -1,7 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AddMedicoComponent } from '../../medico/add-medico/add-medico.component';
+import { DataService } from '../../../../shared/service/data.service';
+import { get } from 'http';
 
 @Component({
   selector: 'app-add-paciente',
@@ -23,31 +25,53 @@ export class AddPacienteComponent {
   prescricao !: string;
   buttonName !: string;
 
-  Medicos : any[] = [];
+  medicosArray : any[] = [];
   
   constructor(
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef : MatDialogRef<AddMedicoComponent>,
+    private dataApi : DataService
   ) { 
     this.title = data.title;
     this.buttonName = data.buttonName;
     this.form = this.fb.group({
-      paciente_id: this.paciente_id,
-      paciente_nome: this.paciente_nome,
-      medico_id: this.medico_id,
-      medico_nome: this.medico_nome,
-      telefone: this.telefone,
-      genero: this.genero,
-      dataAgendamento: this.dataAgendamento,
-      dataNascimento: this.dataNascimento,
-      prescricao: this.prescricao
+      paciente_id: [this.paciente_id, []],
+      paciente_nome: [this.paciente_nome, [Validators.required, Validators.minLength(2)]],
+      medico_id: [this.medico_id, [Validators.required]],
+      medico_nome: [this.medico_nome, []],
+      telefone: [this.telefone, [Validators.required]],
+      genero: [this.genero, [Validators.required]],
+      dataAgendamento: [this.dataAgendamento, [Validators.required]],
+      dataNascimento: [this.dataNascimento, [Validators.required]],
+      prescricao: [this.prescricao, [Validators.required]]
     });
   }
 
   ngOnInit() : void {
-  
+    this.getMedicos();
   }
 
-  
+  getMedicos(){
+    this.dataApi.getMedicos().subscribe(res => {
+      this.medicosArray = res.map((e : any) => {
+        const data = e.payload.doc.data();
+        const medico = {
+          medico_id : e.payload.doc.id,
+          medico_nome : data.nome
+        }
+        return medico;
+      });
+      console.log(this.medicosArray);
+    });
+  }
+
+  registrarPaciente() {
+    this.form.value.medico_nome = this.medicosArray.find(medico => medico.medico_id == this.form.value.medico_id).medico_nome;
+    this.dialogRef.close(this.form.value);
+  }
+
+  cancelar() {
+    this.dialogRef.close();
+  }
 }

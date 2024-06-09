@@ -20,7 +20,7 @@ export class PacienteComponent {
   ngOnInit() {
   }
 
-  addPatient() {
+  addPaciente() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

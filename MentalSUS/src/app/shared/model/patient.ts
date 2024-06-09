@@ -5,7 +5,7 @@ export interface Patient {
     medico_id: string;
     medico_nome: string;
     genero: string;
-    data_nascimento: Date;
-    data_agendamento: Date;
+    dataNascimento: Date;
+    dataAgendamento: Date;
     prescricao: string;
 }

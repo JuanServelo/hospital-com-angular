@@ -33,4 +33,9 @@ export class DataService {
     paciente.paciente_id = this.afs.createId();
     return this.afs.collection('Paciente/').add(paciente);
   }
+
+  getPacientes(){
+    return this.afs.collection('Medico/').snapshotChanges();
+  }
+
 }

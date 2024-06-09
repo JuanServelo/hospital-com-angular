@@ -1,22 +1,45 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule} from '@angular/platform-browser';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from '../../src/environments/environment';
+import { MaterialModule } from './material/material/material.module';
+import { MedicoComponent } from './component/dashboard/medico/medico.component';
+import { PacienteComponent } from './component/dashboard/paciente/paciente.component';
+import { SidebarComponent } from './component/dashboard/sidebar/sidebar.component';
+import { AddMedicoComponent } from './component/dashboard/medico/add-medico/add-medico.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DeleteMedicoComponent } from './component/dashboard/medico/delete-medico/delete-medico.component';
+import { ViewMedicoComponent } from './component/dashboard/medico/view-medico/view-medico.component';
+import { AddPacienteComponent } from './component/dashboard/paciente/add-paciente/add-paciente.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MedicoComponent,
+    PacienteComponent,
+    SidebarComponent,
+    AddMedicoComponent,
+    DeleteMedicoComponent,
+    ViewMedicoComponent,
+    AddPacienteComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
-  providers: [
-    provideClientHydration(),
-    provideAnimationsAsync()
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
